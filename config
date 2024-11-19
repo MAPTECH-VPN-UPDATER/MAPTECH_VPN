@@ -1,0 +1,118 @@
+{
+		"dns": {
+				"servers": [
+						"8.8.8.8"
+				]
+		},
+		"inbounds": [
+				{
+						"port": "10808",
+						"protocol": "socks",
+						"settings": {
+								"auth": "noauth",
+								"udp": true,
+								"userLevel": 8
+						},
+						"sniffing": {
+								"destOverride": [
+										"http",
+										"tls"
+								],
+								"enabled": true
+						},
+						"tag": "socks"
+				},
+				{
+						"port": "10809",
+						"protocol": "http",
+						"settings": {
+								"userLevel": 8
+						},
+						"tag": "http"
+				}
+		],
+		"log": {
+				"loglevel": "none"
+		},
+		"outbounds": [
+				{
+						"mux": {
+								"concurrency": -1,
+								"enabled": false
+						},
+						"protocol": "vmess",
+						"settings": {
+								"vnext": [
+										{
+												"address": "i.ayo.ba",
+												"port": 443,
+												"users": [
+														{
+																"alterId": 0,
+																"id": "de7571c0-a17e-11ef-b930-205c6d5f5d78",
+																"level": 8,
+																"security": "auto"
+														}
+												]
+										}
+								]
+						},
+						"streamSettings": {
+								"network": "ws",
+								"security": "tls",
+								"tlsSettings": {
+										"allowInsecure": true,
+										"serverName": "us-21.hihu.net"
+								},
+								"wsSettings": {
+										"headers": {
+												"Host": "us-21.hihu.net"
+										},
+										"path": "/et6s4af2"
+								}
+						},
+						"tag": "proxy"
+				},
+				{
+						"mux": {
+								"concurrency": 8,
+								"enabled": false
+						},
+						"protocol": "freedom",
+						"settings": {},
+						"tag": "direct"
+				},
+				{
+						"mux": {
+								"concurrency": 8,
+								"enabled": false
+						},
+						"protocol": "blackhole",
+						"settings": {
+								"response": {
+										"type": "http"
+								}
+						},
+						"tag": "block"
+				}
+		],
+		"policy": {
+				"levels": {
+						"8": {
+								"connIdle": 300,
+								"downlinkOnly": 1,
+								"handshake": 4,
+								"uplinkOnly": 1
+						}
+				},
+				"system": {
+						"statsOutboundDownlink": true,
+						"statsOutboundUplink": true
+				}
+		},
+		"routing": {
+				"domainStrategy": "Asls",
+				"rules": []
+		},
+		"stats": {}
+}
